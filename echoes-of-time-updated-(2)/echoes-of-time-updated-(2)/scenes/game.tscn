@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://gip5spryhdmb"]
+
+[ext_resource type="Script" uid="uid://dmxx6bg6nsuy3" path="res://scripts/game_manager.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://b0esd502do3cc" path="res://Sprite/SPRITE_PORTRAIT.png" id="2"]
+
+[node name="Game" type="Node2D" unique_id=245911210]
+script = ExtResource("1")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=515109717]
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 1664.0
+offset_bottom = 960.0
+color = Color(0.05, 0.07, 0.11, 1)
+
+[node name="World" type="Node2D" parent="." unique_id=1802303194]
+
+[node name="Actors" type="Node2D" parent="." unique_id=1207586548]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1023310633]
+position = Vector2(640, 360)
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 720
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1112573678]
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=877772422]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpritePortrait" type="TextureRect" parent="CanvasLayer/UI" unique_id=678395093]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 116.0
+scale = Vector2(1.2173913, 1.2320199)
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepsLabel" type="Label" parent="CanvasLayer/UI" unique_id=2096663332]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 128.0
+offset_right = 380.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 24
+text = "Actions: 0 / 0"
+
+[node name="RecordLabel" type="Label" parent="CanvasLayer/UI" unique_id=1536021228]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 164.0
+offset_right = 240.0
+offset_bottom = 196.0
+theme_override_font_sizes/font_size = 20
+text = "Record: OFF"
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/UI" unique_id=1258334862]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 198.0
+offset_right = 280.0
+offset_bottom = 230.0
+theme_override_font_sizes/font_size = 20
+text = "Tutorial 1"
+
+[node name="InfoLabel" type="Label" parent="CanvasLayer/UI" unique_id=189483096]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 234.0
+offset_right = 1060.0
+offset_bottom = 328.0
+theme_override_font_sizes/font_size = 20
+text = "R = Toggle Record | Esc/Backspace = Reset | W = Next level when complete"
+autowrap_mode = 3
+
+[node name="ResetButton" type="Button" parent="CanvasLayer/UI" unique_id=889952077]
+layout_mode = 0
+offset_left = 1120.0
+offset_top = 20.0
+offset_right = 1248.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 18
+text = "Reset"
+
+[node name="CompleteLabel" type="Label" parent="CanvasLayer/UI" unique_id=1044896080]
+visible = false
+layout_mode = 0
+offset_left = 356.0
+offset_top = 268.0
+offset_right = 920.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 36
+text = "Level Complete!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PausePanel" type="Panel" parent="CanvasLayer/UI" unique_id=694955516]
+visible = false
+layout_mode = 0
+offset_left = 420.0
+offset_top = 210.0
+offset_right = 860.0
+offset_bottom = 470.0
+
+[node name="PauseText" type="Label" parent="CanvasLayer/UI/PausePanel" unique_id=184501598]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 30.0
+offset_right = 410.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 24
+text = "Paused
+Press Esc to resume."
+autowrap_mode = 3
+
+[node name="TutorialSelectButton" type="Button" parent="CanvasLayer/UI/PausePanel" unique_id=830100646]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 210.0
+offset_right = 330.0
+offset_bottom = 254.0
+theme_override_font_sizes/font_size = 18
+text = "Back to Tutorial Select"

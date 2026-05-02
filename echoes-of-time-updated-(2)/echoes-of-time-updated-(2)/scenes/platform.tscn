@@ -1,0 +1,335 @@
+[gd_scene format=3 uid="uid://bd453bpfp1dwf"]
+
+[ext_resource type="Texture2D" uid="uid://chqcqrdcmwvur" path="res://Sprite/Dungeon Tile Set.png" id="2_nlgqw"]
+
+[sub_resource type="GDScript" id="GDScript_ba0x2"]
+script/source = "extends StaticBody2D
+
+@export var tile_texture_path: String = \"res://Sprite/SPRITE_SHEET.png\"
+@export var tile_size: int = 32
+@export var atlas_region: Rect2 = Rect2(0, 256, 32, 32) # same look as old platform blocks
+
+@onready var collision_shape: CollisionShape2D = get_node_or_null(\"CollisionShape2D\") as CollisionShape2D
+@onready var tile_map: TileMap = _resolve_tile_map()
+
+var _fallback_rect: ColorRect
+
+var _one_way: bool = false
+var _configured: bool = false
+
+@export var auto_build_from_collision: bool = true
+@export var one_way: bool = false
+@export var platform_tint: Color = Color(0.24, 0.3, 0.42, 1.0)
+@export var auto_fill_tiles: bool = true
+
+
+func setup(rect: Rect2, one_way_flag: bool, tint_color: Color = Color(1, 1, 1, 1)) -> void:
+	_one_way = one_way_flag
+	_configured = true
+	position = rect.position
+
+	# Collision (keeps original behavior)
+	if collision_shape != null:
+		var rs := RectangleShape2D.new()
+		rs.size = rect.size
+		collision_shape.shape = rs
+		collision_shape.position = rect.size * 0.5
+		collision_shape.one_way_collision = one_way_flag
+		collision_shape.one_way_collision_margin = 6.0
+
+	# Collision layers match original code in game_manager.gd
+	collision_layer = 16 if one_way_flag else 4
+	collision_mask = 0
+
+	# Visuals (TileMap)
+	if tile_map == null:
+		return
+	tile_map.position = Vector2.ZERO
+	tile_map.visible = true
+	tile_map.modulate = tint_color
+	_build_tileset_if_needed()
+	_ensure_tilemap_layer()
+	if auto_fill_tiles:
+		_fill_tiles(rect.size)
+	tile_map.queue_redraw()
+
+	# If the TileMap still isn't configured, show a fallback so platforms are never invisible.
+	if tile_map.tile_set == null:
+		_show_fallback(rect.size, tint_color)
+	else:
+		_hide_fallback()
+
+
+func _ready() -> void:
+	# If you placed this scene directly in a level (editor), no manager will call setup().
+	# Build visuals + collision from the existing CollisionShape2D so it shows up.
+	if _configured or not auto_build_from_collision:
+		return
+	if collision_shape == null or tile_map == null:
+		return
+	if collision_shape.shape == null or not (collision_shape.shape is RectangleShape2D):
+		return
+
+	var rs := collision_shape.shape as RectangleShape2D
+	var rect := Rect2(global_position, rs.size)
+	# setup() expects rect.position to become our node position; preserve current position.
+	rect.position = position
+	setup(rect, one_way, platform_tint)
+
+
+func _resolve_tile_map() -> TileMap:
+	var direct := get_node_or_null(\"TileMap\")
+	if direct is TileMap:
+		return direct as TileMap
+	var nested := get_node_or_null(\"CollisionShape2D/TileMap\")
+	if nested is TileMap:
+		return nested as TileMap
+	return null
+
+
+func _build_tileset_if_needed() -> void:
+	if tile_map.tile_set != null:
+		return
+
+	if not ResourceLoader.exists(tile_texture_path):
+		print(\"Platform: missing texture at \", tile_texture_path)
+		return
+	var tex_res := load(tile_texture_path)
+	if tex_res == null or not (tex_res is Texture2D):
+		return
+	var tex: Texture2D = tex_res as Texture2D
+
+	var ts := TileSet.new()
+	var atlas := TileSetAtlasSource.new()
+	atlas.texture = tex
+	atlas.texture_region_size = Vector2i(tile_size, tile_size)
+
+	var source_id := ts.add_source(atlas)
+	# One tile at atlas_coords (0,0) with our chosen region.
+	# We simulate the region by adjusting the tile's atlas coords:
+	# atlas coords are in \"tile_size\" units.
+	var ax := int(atlas_region.position.x / float(tile_size))
+	var ay := int(atlas_region.position.y / float(tile_size))
+	var coords := Vector2i(ax, ay)
+	if not atlas.has_tile(coords):
+		atlas.create_tile(coords)
+
+	tile_map.tile_set = ts
+	# Cache on the TileMap so fill uses correct source id.
+	tile_map.set_meta(\"platform_source_id\", source_id)
+
+
+func _fill_tiles(size_px: Vector2) -> void:
+	if tile_map.tile_set == null:
+		return
+
+	# If someone painted tiles in the editor, keep them.
+	if tile_map.get_used_cells(0).is_empty():
+		tile_map.clear()
+
+	var w := maxi(1, int(ceil(size_px.x / float(tile_size))))
+	var h := maxi(1, int(ceil(size_px.y / float(tile_size))))
+
+	var source_id := _get_fill_source_id()
+	var ax := int(atlas_region.position.x / float(tile_size))
+	var ay := int(atlas_region.position.y / float(tile_size))
+	var atlas_coords := Vector2i(ax, ay)
+
+	for y in range(h):
+		for x in range(w):
+			tile_map.set_cell(0, Vector2i(x, y), source_id, atlas_coords)
+
+
+func _get_fill_source_id() -> int:
+	# If the TileSet was provided in the editor, platform_source_id meta won't exist.
+	# In that case, use the first available source id so cells actually render.
+	if tile_map == null or tile_map.tile_set == null:
+		return 0
+	if tile_map.has_meta(\"platform_source_id\"):
+		return int(tile_map.get_meta(\"platform_source_id\"))
+	var ts := tile_map.tile_set
+	if ts.get_source_count() > 0:
+		return ts.get_source_id(0)
+	return 0
+
+
+func _show_fallback(size_px: Vector2, tint_color: Color) -> void:
+	if _fallback_rect == null:
+		_fallback_rect = ColorRect.new()
+		_fallback_rect.name = \"FallbackRect\"
+		add_child(_fallback_rect)
+	_fallback_rect.position = Vector2.ZERO
+	_fallback_rect.size = size_px
+	_fallback_rect.color = tint_color
+	_fallback_rect.visible = true
+
+
+func _hide_fallback() -> void:
+	if _fallback_rect != null:
+		_fallback_rect.visible = false
+
+
+func _ensure_tilemap_layer() -> void:
+	# TileMap in some Godot versions can be created with 0 layers in scenes.
+	# set_cell(0, ...) will then do nothing and the platform becomes invisible.
+	if tile_map == null:
+		return
+	if tile_map.get_layers_count() <= 0:
+		tile_map.add_layer(0)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_507ja"]
+size = Vector2(324, 33.5)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n1ckp"]
+texture = ExtResource("2_nlgqw")
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+10:6/0 = 0
+11:6/0 = 0
+12:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+9:7/0 = 0
+10:7/0 = 0
+11:7/0 = 0
+12:7/0 = 0
+5:8/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+5:9/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+10:9/0 = 0
+11:9/0 = 0
+12:9/0 = 0
+13:9/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+5:10/0 = 0
+7:10/0 = 0
+8:10/0 = 0
+10:10/0 = 0
+12:10/0 = 0
+13:10/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+5:11/0 = 0
+7:11/0 = 0
+8:11/0 = 0
+9:11/0 = 0
+10:11/0 = 0
+12:11/0 = 0
+13:11/0 = 0
+1:12/0 = 0
+2:12/0 = 0
+3:12/0 = 0
+4:12/0 = 0
+5:12/0 = 0
+6:12/0 = 0
+7:12/0 = 0
+8:12/0 = 0
+9:12/0 = 0
+10:12/0 = 0
+11:12/0 = 0
+12:12/0 = 0
+2:13/0 = 0
+4:13/0 = 0
+5:13/0 = 0
+6:13/0 = 0
+7:13/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+1:14/0 = 0
+2:14/0 = 0
+3:14/0 = 0
+4:14/0 = 0
+5:14/0 = 0
+6:14/0 = 0
+10:14/0 = 0
+11:14/0 = 0
+12:14/0 = 0
+13:14/0 = 0
+7:15/0 = 0
+8:15/0 = 0
+9:15/0 = 0
+10:15/0 = 0
+11:15/0 = 0
+12:15/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_u7qrw"]
+sources/0 = SubResource("TileSetAtlasSource_n1ckp")
+
+[node name="Platform" type="StaticBody2D" unique_id=1833584140]
+script = SubResource("GDScript_ba0x2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1728563452]
+position = Vector2(-2, -65.75)
+shape = SubResource("RectangleShape2D_507ja")
+
+[node name="TileMap" type="TileMap" parent="CollisionShape2D" unique_id=876895044]
+position = Vector2(2, 65.75)
+scale = Vector2(5, 5)
+tile_set = SubResource("TileSet_u7qrw")
+format = 2
+layer_0/tile_data = PackedInt32Array(-2, 65536, 9, -1, 131072, 9, -65536, 131072, 9, -65535, 196608, 9)

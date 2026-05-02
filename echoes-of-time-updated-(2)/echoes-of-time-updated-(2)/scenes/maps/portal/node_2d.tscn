@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://tc4ortmmclbw"]
+
+[ext_resource type="Script" uid="uid://bag57s57vw2re" path="res://scenes/maps/portal/portal.gd" id="1_wtcfe"]
+
+[node name="Node2D" type="Node2D" unique_id=1452198284]
+script = ExtResource("1_wtcfe")
