@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://yag5mgjqu0so"]
+
+[ext_resource type="Texture2D" uid="uid://chqcqrdcmwvur" path="res://Sprite/Dungeon Tile Set.png" id="1_84u5r"]
+[ext_resource type="Script" uid="uid://cwjlb120uc74u" path="res://scripts/gateplate.gd" id="2_gateplate"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vfe6"]
+size = Vector2(51, 55)
+
+[node name="Gateplate" type="Node2D" unique_id=727732505]
+script = ExtResource("2_gateplate")
+
+[node name="Offgate" type="Sprite2D" parent="." unique_id=845006829]
+modulate = Color(2.3133948, 0, 2.3133948, 1)
+position = Vector2(1, -25)
+scale = Vector2(3, 3)
+texture = ExtResource("1_84u5r")
+region_enabled = true
+region_rect = Rect2(175.90381, 190.94305, 15.827576, 17.60817)
+
+[node name="Ongate" type="Sprite2D" parent="." unique_id=1932653512]
+visible = false
+modulate = Color(2.2241454, 2.2241454, 0, 1)
+position = Vector2(3, -24)
+scale = Vector2(3, 3)
+texture = ExtResource("1_84u5r")
+region_enabled = true
+region_rect = Rect2(192.9577, 191.8353, 14.640503, 16.421097)
+
+[node name="Detect" type="Area2D" parent="." unique_id=1773484135]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detect" unique_id=994207597]
+position = Vector2(0.5, -25)
+shape = SubResource("RectangleShape2D_5vfe6")

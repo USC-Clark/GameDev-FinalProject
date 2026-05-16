@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://b6dmio6wlgouo"]
+
+[ext_resource type="Script" uid="uid://dmr2brq4ps2ko" path="res://scripts/main_menu.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bherpdyb1efsi" path="res://Sprite/menu-background-resize.png" id="2_bg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_panel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn_normal"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn_pressed"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn_hover"]
+
+[node name="MainMenu" type="Control" unique_id=26410134]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Backdrop" type="TextureRect" parent="." unique_id=66193890]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Center" type="CenterContainer" parent="." unique_id=2004420897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1778051477]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel" unique_id=1831306204]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Center/Panel/VBox" unique_id=166793132]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Echoes of Time"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Center/Panel/VBox" unique_id=1584766253]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "Cooperate with your past self."
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Center/Panel/VBox" unique_id=657225653]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="Center/Panel/VBox" unique_id=1294478205]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.7, 0.1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn_hover")
+text = "Play Game"
+
+[node name="SettingsButton" type="Button" parent="Center/Panel/VBox" unique_id=841582051]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.7, 0.1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn_hover")
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="Center/Panel/VBox" unique_id=426723510]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.7, 0.1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn_hover")
+text = "Quit"
+
+[node name="Hint" type="Label" parent="Center/Panel/VBox" unique_id=640848188]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 13
+text = "Tip: Press F in Tutorial Select to unlock all levels (admin test mode)."
+horizontal_alignment = 1

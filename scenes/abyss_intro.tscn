@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bihvpjyph828t"]
+
+[ext_resource type="Script" uid="uid://dfmfuok3hqsar" path="res://scripts/abyss_intro.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cg16r4ahb7bn2" path="res://scenes/background_boss.tscn" id="2_boss"]
+
+[node name="AbyssIntro" type="CanvasLayer" unique_id=1677227325]
+layer = 128
+script = ExtResource("1")
+
+[node name="BG" type="ColorRect" parent="." unique_id=199653026]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BossAnchor" type="Node2D" parent="." unique_id=1899827719]
+
+[node name="Background_Boss" parent="BossAnchor" unique_id=1228115830 instance=ExtResource("2_boss")]
+modulate = Color(1, 1, 1, 0.55)
+position = Vector2(725, 450.49994)
+scale = Vector2(6.5, 3.7874994)
+autoplay = "default"
+
+[node name="Center" type="CenterContainer" parent="." unique_id=1121710323]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Center" unique_id=2066999619]
+custom_minimum_size = Vector2(900, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.1, 0.15, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 0, 0.6)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

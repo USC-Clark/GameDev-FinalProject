@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://b4gvpcvhk7whh"]
+
+[ext_resource type="Texture2D" uid="uid://chqcqrdcmwvur" path="res://Sprite/Dungeon Tile Set.png" id="1_uwq7d"]
+[ext_resource type="Script" uid="uid://bgskqw2p4joug" path="res://scripts/gate_door.gd" id="2_gate"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gate"]
+size = Vector2(41, 129)
+
+[node name="Gate" type="AnimatableBody2D" unique_id=1545821994]
+scale = Vector2(1.2, 1.2)
+script = ExtResource("2_gate")
+
+[node name="Closegate" type="Sprite2D" parent="." unique_id=700931806]
+position = Vector2(0, -63)
+scale = Vector2(3, 3)
+texture = ExtResource("1_uwq7d")
+region_enabled = true
+region_rect = Rect2(81.69193, 144.49048, 12.426605, 43.015167)
+
+[node name="Opengate" type="Sprite2D" parent="." unique_id=968604005]
+visible = false
+position = Vector2(-1, -105)
+scale = Vector2(3, 3)
+texture = ExtResource("1_uwq7d")
+region_enabled = true
+region_rect = Rect2(82.02644, 144.47763, 11.526436, 15.386383)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=100000010]
+position = Vector2(-2, -63.000004)
+shape = SubResource("RectangleShape2D_gate")

@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cpdgaepsljvh2"]
+
+[ext_resource type="Texture2D" uid="uid://chqcqrdcmwvur" path="res://Sprite/Dungeon Tile Set.png" id="1_ba8gm"]
+[ext_resource type="Script" uid="uid://v5qhoo37738v" path="res://scripts/door.gd" id="2_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpvv5"]
+size = Vector2(29, 39.666668)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(28.000004, 39.666668)
+
+[node name="Door" type="AnimatableBody2D" unique_id=1746617064]
+scale = Vector2(3, 3)
+script = ExtResource("2_door")
+
+[node name="Close" type="Sprite2D" parent="." unique_id=101921285]
+position = Vector2(1, -18.999998)
+scale = Vector2(1.104, 1.242)
+texture = ExtResource("1_ba8gm")
+region_enabled = true
+region_rect = Rect2(206.63687, 160.63638, 18.433197, 31.91922)
+
+[node name="Open" type="Sprite2D" parent="." unique_id=1910053221]
+visible = false
+position = Vector2(5.333333, -18.333334)
+scale = Vector2(1.1666666, 1.2419355)
+texture = ExtResource("1_ba8gm")
+region_enabled = true
+region_rect = Rect2(188.27277, 160.63638, 15.017441, 31.91922)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391111247]
+visible = false
+position = Vector2(0.8333335, -19.500004)
+shape = SubResource("RectangleShape2D_hpvv5")
+
+[node name="ExitArea" type="Area2D" parent="." unique_id=200000001]
+collision_layer = 0
+monitoring = false
+
+[node name="ExitShape" type="CollisionShape2D" parent="ExitArea" unique_id=200000002]
+position = Vector2(1.3333343, -19.500004)
+shape = SubResource("RectangleShape2D_exit")

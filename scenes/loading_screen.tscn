@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://cx86eq2hbvv62"]
+
+[ext_resource type="Script" uid="uid://bd2sra8eutijo" path="res://scripts/loading_screen.gd" id="1_load"]
+[ext_resource type="Texture2D" uid="uid://ccfdoehhki0ym" path="res://Sprite/actual-background.png" id="2_5phy8"]
+[ext_resource type="Texture2D" uid="uid://b0esd502do3cc" path="res://Sprite/SPRITE_PORTRAIT.png" id="2_sprite"]
+[ext_resource type="PackedScene" uid="uid://bxxdmua2bak2" path="res://scenes/load_animation.tscn" id="3_ku3bi"]
+
+[node name="LoadingScreen" type="Control" unique_id=1215959932]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 4.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_load")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1541740882]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -19.0
+offset_right = -3.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5phy8")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="LoadAnimation" type="VBoxContainer" parent="." unique_id=1391409374]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -260.0
+offset_right = 350.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Sprite" type="TextureRect" parent="LoadAnimation" unique_id=2098513259]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_sprite")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="LoadAnimation" unique_id=326679586]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Echoes of Time"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="LoadAnimation" unique_id=1238803804]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="Spacer1" type="Control" parent="LoadAnimation" unique_id=104960462]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="LoadAnimation" unique_id=1149931726]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="LoadAnimation" unique_id=1958767345]
+custom_minimum_size = Vector2(600, 24)
+layout_mode = 2
+show_percentage = false
+
+[node name="LoadAnimation" parent="LoadAnimation" unique_id=721251915 instance=ExtResource("3_ku3bi")]
+position = Vector2(356.99997, 370)
+scale = Vector2(0.16536783, 0.09008731)
+
+[node name="Version" type="Label" parent="." unique_id=1163269058]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -36.0
+offset_right = 300.0
+offset_bottom = -12.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.4, 0.4, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+text = "v1.0"

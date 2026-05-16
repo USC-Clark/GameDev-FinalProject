@@ -1,0 +1,186 @@
+[gd_scene format=3 uid="uid://bd440xo7banwi"]
+
+[ext_resource type="Script" uid="uid://bv1dsrpxaa40x" path="res://scripts/traverse_manager.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://b0esd502do3cc" path="res://Sprite/SPRITE_PORTRAIT.png" id="2"]
+[ext_resource type="PackedScene" uid="uid://b2v5f6oyin6w" path="res://scenes/touch_controls.tscn" id="3_tc"]
+
+[node name="TraverseGame" type="Node2D" unique_id=316243969]
+script = ExtResource("1")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=927256021]
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 1664.0
+offset_bottom = 1028.0
+color = Color(0.05, 0.07, 0.11, 1)
+
+[node name="World" type="Node2D" parent="." unique_id=793217807]
+process_mode = 1
+
+[node name="Actors" type="Node2D" parent="." unique_id=108248129]
+process_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1106979164]
+position = Vector2(725, 450)
+limit_left = 0
+limit_top = 0
+limit_right = 1450
+limit_bottom = 900
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1487102552]
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=1923537118]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SpritePortrait" type="TextureRect" parent="CanvasLayer/UI" unique_id=1076733637]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 116.0
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StepsLabel" type="Label" parent="CanvasLayer/UI" unique_id=773134470]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 128.0
+offset_right = 380.0
+offset_bottom = 160.0
+theme_override_colors/font_color = Color(0.9, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "Actions: 0 / 0"
+
+[node name="RecordLabel" type="Label" parent="CanvasLayer/UI" unique_id=454074274]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 164.0
+offset_right = 240.0
+offset_bottom = 196.0
+theme_override_colors/font_color = Color(0.9, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "Record: OFF"
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/UI" unique_id=1274473573]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 198.0
+offset_right = 480.0
+offset_bottom = 230.0
+theme_override_colors/font_color = Color(0.9, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "Traverse 1"
+
+[node name="InfoLabel" type="Label" parent="CanvasLayer/UI" unique_id=2104040628]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 234.0
+offset_right = 1060.0
+offset_bottom = 328.0
+theme_override_colors/font_color = Color(0.9, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "R = Toggle Record | Esc/Backspace = Reset | W = Next when complete"
+autowrap_mode = 3
+
+[node name="ResetButton" type="Button" parent="CanvasLayer/UI" unique_id=791550668]
+layout_mode = 0
+offset_left = 1239.0
+offset_top = 89.0
+offset_right = 1429.0
+offset_bottom = 174.0
+theme_override_colors/font_color = Color(0.8750814, 0.8750814, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Reset"
+
+[node name="SolveButton" type="Button" parent="CanvasLayer/UI" unique_id=1376263196]
+visible = false
+layout_mode = 0
+offset_left = 1320.0
+offset_top = 66.0
+offset_right = 1448.0
+offset_bottom = 108.0
+theme_override_font_sizes/font_size = 11
+text = "Solve"
+
+[node name="CompletePanel" type="Panel" parent="CanvasLayer/UI" unique_id=1971790281]
+visible = false
+layout_mode = 0
+offset_left = 375.0
+offset_top = 240.0
+offset_right = 1075.0
+offset_bottom = 480.0
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/UI/CompletePanel" unique_id=1971790282]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="CompleteLabel" type="Label" parent="CanvasLayer/UI/CompletePanel/VBox" unique_id=1971790283]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Level Complete!"
+horizontal_alignment = 1
+
+[node name="NextLevelButton" type="Button" parent="CanvasLayer/UI/CompletePanel/VBox" unique_id=1971790284]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Next Level"
+
+[node name="SelectButton" type="Button" parent="CanvasLayer/UI/CompletePanel/VBox" unique_id=1971790285]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Return to Traverse Select"
+
+[node name="PausePanel" type="Panel" parent="CanvasLayer/UI" unique_id=176286491]
+visible = false
+layout_mode = 0
+offset_left = 505.0
+offset_top = 305.0
+offset_right = 945.0
+offset_bottom = 595.0
+
+[node name="PauseText" type="Label" parent="CanvasLayer/UI/PausePanel" unique_id=998787422]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 30.0
+offset_right = 410.0
+offset_bottom = 200.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "Paused
+Press Esc to resume."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TraverseSelectButton" type="Button" parent="CanvasLayer/UI/PausePanel" unique_id=457568969]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 208.0
+offset_right = 389.0
+offset_bottom = 252.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Back to Traverse Select"
+
+[node name="TouchControls" parent="CanvasLayer" unique_id=1542859282 instance=ExtResource("3_tc")]

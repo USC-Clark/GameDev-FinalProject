@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://caaap6myopcjf"]
+
+[ext_resource type="Texture2D" uid="uid://chqcqrdcmwvur" path="res://Sprite/Dungeon Tile Set.png" id="2_fttkb"]
+[ext_resource type="Script" uid="uid://b33qxhdfe8hmr" path="res://scripts/key.gd" id="2_key"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wy8tx"]
+size = Vector2(54, 53.5)
+
+[node name="Key" type="Area2D" unique_id=878088989]
+script = ExtResource("2_key")
+
+[node name="Off" type="Sprite2D" parent="." unique_id=2069846575]
+position = Vector2(0, -26)
+scale = Vector2(3, 3)
+texture = ExtResource("2_fttkb")
+region_enabled = true
+region_rect = Rect2(175.92151, 191.27715, 16.223267, 16.816788)
+
+[node name="On" type="Sprite2D" parent="." unique_id=380414332]
+visible = false
+modulate = Color(0.43146813, 0.9118175, 0, 1)
+position = Vector2(1, -25)
+scale = Vector2(3, 3)
+texture = ExtResource("2_fttkb")
+region_enabled = true
+region_rect = Rect2(192.9132, 191.89275, 14.975647, 15.931534)
+
+[node name="Detection" type="Area2D" parent="." unique_id=100000001]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection" unique_id=100000002]
+position = Vector2(0, -27.75)
+shape = SubResource("RectangleShape2D_wy8tx")

@@ -1,0 +1,184 @@
+[gd_scene format=3 uid="uid://c4rtrffyoqrx7"]
+
+[ext_resource type="Script" uid="uid://bhdj7hrus10dy" path="res://scripts/mode_select.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://tb1cw5h4md10" path="res://Sprite/pick-resized_image.png" id="2_bg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_panel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn_normal"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn_pressed"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btn_hover"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_abyss_locked"]
+bg_color = Color(0.08, 0.06, 0.12, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_key_empty"]
+bg_color = Color(0.1, 0.08, 0.14, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.3, 0.45, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="ModeSelect" type="Control" unique_id=78910757]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Backdrop" type="TextureRect" parent="." unique_id=1598000103]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Center" type="CenterContainer" parent="." unique_id=891556387]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=2065687038]
+custom_minimum_size = Vector2(900, 500)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel" unique_id=1028400164]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Center/Panel/VBox" unique_id=1916831755]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Select Mode"
+horizontal_alignment = 1
+
+[node name="TutorialButton" type="Button" parent="Center/Panel/VBox" unique_id=1378300110]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.7, 0.1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn_hover")
+text = "Tutorial Mode"
+
+[node name="TraverseButton" type="Button" parent="Center/Panel/VBox" unique_id=1440031398]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.7, 0.1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn_hover")
+text = "Traverse Mode"
+
+[node name="AbyssSection" type="VBoxContainer" parent="Center/Panel/VBox" unique_id=368098426]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="AbyssButton" type="Button" parent="Center/Panel/VBox/AbyssSection" unique_id=368098427]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.5, 0.8, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.7, 0.1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_disabled_color = Color(0.35, 0.3, 0.45, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_abyss_locked")
+disabled = true
+text = "Abyss Mode (Expert)"
+
+[node name="KeyRow" type="HBoxContainer" parent="Center/Panel/VBox/AbyssSection" unique_id=368098428]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="KeyBox1" type="PanelContainer" parent="Center/Panel/VBox/AbyssSection/KeyRow" unique_id=368098429]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key_empty")
+
+[node name="Label" type="Label" parent="Center/Panel/VBox/AbyssSection/KeyRow/KeyBox1" unique_id=368098430]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "🗝"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyBox2" type="PanelContainer" parent="Center/Panel/VBox/AbyssSection/KeyRow" unique_id=368098431]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key_empty")
+
+[node name="Label" type="Label" parent="Center/Panel/VBox/AbyssSection/KeyRow/KeyBox2" unique_id=368098432]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "🗝"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyBox3" type="PanelContainer" parent="Center/Panel/VBox/AbyssSection/KeyRow" unique_id=368098433]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key_empty")
+
+[node name="Label" type="Label" parent="Center/Panel/VBox/AbyssSection/KeyRow/KeyBox3" unique_id=368098434]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "🗝"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyBox4" type="PanelContainer" parent="Center/Panel/VBox/AbyssSection/KeyRow" unique_id=368098435]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key_empty")
+
+[node name="Label" type="Label" parent="Center/Panel/VBox/AbyssSection/KeyRow/KeyBox4" unique_id=368098436]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "🗝"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HintLabel" type="Label" parent="Center/Panel/VBox/AbyssSection" unique_id=368098437]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.45, 0.6, 1)
+theme_override_font_sizes/font_size = 13
+text = "Collect 4 dungeon keys to unlock"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="Center/Panel/VBox" unique_id=339745084]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_btn_hover")
+text = "Back"

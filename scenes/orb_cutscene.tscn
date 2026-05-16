@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bxqn4ygxanmis"]
+
+[ext_resource type="Script" uid="uid://b6r6wuatrmb8t" path="res://scripts/orb_cutscene.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cu780s6to13v1" path="res://scenes/cutscene_background.tscn" id="2"]
+
+[node name="OrbCutscene" type="CanvasLayer" unique_id=1172007324]
+script = ExtResource("1")
+background_scene = ExtResource("2")

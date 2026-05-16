@@ -1,0 +1,11 @@
+[gd_resource type="Theme" format=3 uid="uid://d4m2s2xyf6g64"]
+
+[ext_resource type="FontFile" uid="uid://dx3xluma5abrm" path="res://Sprite/Hexenaat2.ttf" id="1_font"]
+[ext_resource type="FontFile" path="res://Sprite/Obelisk-Demo.ttf" id="2_obelisk"]
+
+[resource]
+default_font = ExtResource("2_obelisk")
+default_font_size = 15
+Button/font_sizes/font_size = 15
+Label/font_sizes/font_size = 15
+RichTextLabel/font_sizes/normal_font_size = 13

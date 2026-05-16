@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b3mqwmo72y8ad"]
+
+[ext_resource type="Texture2D" uid="uid://chqcqrdcmwvur" path="res://Sprite/Dungeon Tile Set.png" id="2_nlgqw"]
+[ext_resource type="Script" uid="uid://dbi68fhqe3kf8" path="res://scripts/lift_platform.gd" id="3_lift"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ba0x2"]
+size = Vector2(47.666668, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detect"]
+size = Vector2(46.666668, 14)
+
+[node name="Platform" type="AnimatableBody2D" unique_id=1909108986]
+scale = Vector2(3, 3)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_lift")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=188777153]
+position = Vector2(-0.16666603, -3.5)
+shape = SubResource("RectangleShape2D_ba0x2")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=891626633]
+position = Vector2(0, -3.6666667)
+texture = ExtResource("2_nlgqw")
+region_enabled = true
+region_rect = Rect2(15.804543, 143.17316, 48.57998, 7.188858)
+
+[node name="StandDetect" type="Area2D" parent="." unique_id=100000020]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StandDetect" unique_id=100000021]
+position = Vector2(-0.33333397, -10)
+shape = SubResource("RectangleShape2D_detect")
