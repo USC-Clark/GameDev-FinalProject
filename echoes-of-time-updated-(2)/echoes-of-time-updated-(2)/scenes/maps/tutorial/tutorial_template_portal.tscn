@@ -1,0 +1,164 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/traverse_level.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/pressure_button.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/gate.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/lift_platform.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://24sslvummpm0" path="res://scenes/maps/portal/portal.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="wall_vertical_shape"]
+size = Vector2(12, 720)
+
+[sub_resource type="RectangleShape2D" id="wall_top_shape"]
+size = Vector2(1280, 12)
+
+[sub_resource type="RectangleShape2D" id="floor_shape"]
+size = Vector2(1280, 28)
+
+[sub_resource type="RectangleShape2D" id="btn_shape"]
+size = Vector2(56, 20)
+
+[sub_resource type="RectangleShape2D" id="gate_shape"]
+size = Vector2(32, 96)
+
+[sub_resource type="RectangleShape2D" id="hazard_shape"]
+size = Vector2(200, 24)
+
+[node name="TutorialTemplate" type="Node2D"]
+script = ExtResource("1")
+action_limit = 12
+
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(96, 620)
+
+[node name="ExitPortal" parent="." instance=ExtResource("5")]
+position = Vector2(1128, 644)
+portal_type = "Exit"
+door_width = 64.0
+door_height = 96.0
+aura_intensity = 1.2
+aura_speed = 2.0
+door_color = Color(0.3, 0.25, 0.2, 1)
+frame_color = Color(0.5, 0.45, 0.35, 1)
+aura_color = Color(0.95, 0.88, 0.2, 1)
+glow_color = Color(1, 0.9, 0.3, 0.3)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="WallLeft" type="StaticBody2D" parent="Walls"]
+position = Vector2(-12, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallLeft"]
+shape = SubResource("wall_vertical_shape")
+position = Vector2(6, 360)
+
+[node name="Visual" type="ColorRect" parent="Walls/WallLeft"]
+size = Vector2(12, 720)
+color = Color(0.2, 0.24, 0.31, 1)
+
+[node name="WallRight" type="StaticBody2D" parent="Walls"]
+position = Vector2(1280, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallRight"]
+shape = SubResource("wall_vertical_shape")
+position = Vector2(6, 360)
+
+[node name="Visual" type="ColorRect" parent="Walls/WallRight"]
+size = Vector2(12, 720)
+color = Color(0.2, 0.24, 0.31, 1)
+
+[node name="Ceiling" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -12)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Ceiling"]
+shape = SubResource("wall_top_shape")
+position = Vector2(640, 6)
+
+[node name="Visual" type="ColorRect" parent="Walls/Ceiling"]
+size = Vector2(1280, 12)
+color = Color(0.2, 0.24, 0.31, 1)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 692)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("floor_shape")
+position = Vector2(640, 14)
+
+[node name="Visual" type="ColorRect" parent="Floor"]
+size = Vector2(1280, 28)
+color = Color(0.2, 0.24, 0.31, 1)
+
+[node name="Button_B1" type="Area2D" parent="."]
+script = ExtResource("2")
+button_id = "B1"
+groups = ["pressure_button"]
+position = Vector2(300, 672)
+collision_layer = 8
+collision_mask = 3
+monitoring = true
+monitorable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button_B1"]
+shape = SubResource("btn_shape")
+position = Vector2(28, 10)
+
+[node name="Visual" type="ColorRect" parent="Button_B1"]
+size = Vector2(56, 20)
+color = Color(0.88, 0.45, 0.25, 1)
+
+[node name="Gate" type="StaticBody2D" parent="."]
+script = ExtResource("3")
+groups = ["gate"]
+button_ids = PackedStringArray("B1")
+position = Vector2(980, 596)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gate"]
+shape = SubResource("gate_shape")
+position = Vector2(16, 48)
+
+[node name="Visual" type="ColorRect" parent="Gate"]
+size = Vector2(32, 96)
+color = Color(0.8, 0.18, 0.22, 1)
+
+[node name="Lift_L1" type="AnimatableBody2D" parent="."]
+script = ExtResource("4")
+groups = ["lift"]
+button_id = "B1"
+start = Vector2(520, 620)
+end = Vector2(520, 420)
+speed = 120.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lift_L1"]
+shape = SubResource("btn_shape")
+position = Vector2(60, 10)
+
+[node name="Visual" type="ColorRect" parent="Lift_L1"]
+size = Vector2(120, 20)
+color = Color(0.3, 0.65, 0.9, 1)
+
+[node name="Hazard_01" type="Area2D" parent="."]
+groups = ["hazard"]
+position = Vector2(420, 692)
+collision_layer = 32
+collision_mask = 3
+monitoring = true
+monitorable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard_01"]
+shape = SubResource("hazard_shape")
+position = Vector2(100, 12)
+
+[node name="Visual" type="ColorRect" parent="Hazard_01"]
+size = Vector2(200, 24)
+color = Color(0.9, 0.15, 0.2, 1)

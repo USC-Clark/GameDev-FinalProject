@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/mode_select.gd" id="1"]
+
+[node name="ModeSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.07, 0.11, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(760, 420)
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+theme_override_font_sizes/font_size = 34
+horizontal_alignment = 1
+text = "Select Mode"
+
+[node name="TutorialButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 56)
+theme_override_font_sizes/font_size = 22
+text = "Tutorial Mode"
+
+[node name="TraverseButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 56)
+theme_override_font_sizes/font_size = 22
+text = "Traverse Mode (Easy / Medium / Hard)"
+
+[node name="AbyssButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 56)
+theme_override_font_sizes/font_size = 22
+disabled = true
+modulate = Color(1, 1, 1, 0.4)
+text = "Abyss Mode (Expert) — coming soon"
+
+[node name="BackButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 46)
+theme_override_font_sizes/font_size = 20
+text = "Back"
